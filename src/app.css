@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root {
+    --cor-fundo: #333333;
+    --cor-primaria: #000000;
+    --cor-secundaria: #000000;
+    --cor-primaria: #202020;
+    --cor-positivo: #0C8201;
+    --cor-negativo: #BF000A;
+
+    --cor-texto-principal: #FFF;
+    --cor-texto-secundaria: #C2C2C2;
+
+    --texto-normal: 24px;
+    --texto-secundario: 0.84rem;
+    --texto-titulo:2rem;
+}
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--cor-fundo);
+    font-weight:lighter;
+    font-size: var(--texto-normal);
+    color: var(--cor-texto-principal);
+    font-family: "Instrument Sans", sans-serif;
+}
+h1{
+    font-size: var(--texto-titulo);
+}
