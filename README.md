@@ -11,4 +11,5 @@ O sistema deve permitir o gerenciamento de tasks e usuarios, consumindo uma API 
 - 🔴 **Fix:** Corrigindo um erro ou bug.
 - 🔵 **Docs:** Alterando apenas a documentação.
 - 🟡 **refactor:** Refatorando o código.
-- 🟣 **style:** Alterando a formatação.
+- 🟣 **style:** Alterando o arquivo de estilização.
+

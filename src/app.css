@@ -2,7 +2,6 @@
 
 :root {
     --cor-fundo: #333333;
-    --cor-primaria: #000000;
     --cor-secundaria: #000000;
     --cor-primaria: #202020;
     --cor-positivo: #0C8201;
@@ -16,12 +15,15 @@
     --texto-titulo:2rem;
 }
 
+html{
+  background-color: var(--cor-fundo);
+}
+
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background-color: var(--cor-fundo);
     font-weight:lighter;
     font-size: var(--texto-normal);
     color: var(--cor-texto-principal);
