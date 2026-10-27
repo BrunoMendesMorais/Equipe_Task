@@ -19,6 +19,9 @@ html{
   background-color: var(--cor-fundo);
 }
 
+body{
+    min-height: 100vh;
+}
 
 *{
     padding: 0;
