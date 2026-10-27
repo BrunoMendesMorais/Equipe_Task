@@ -12,7 +12,7 @@
 
 <style scoped>
 main{
-  min-height: 40vh;
+  min-height: 80vh;
 }
 </style>
 
