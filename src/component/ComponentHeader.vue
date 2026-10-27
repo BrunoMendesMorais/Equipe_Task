@@ -28,7 +28,7 @@ button{
   background-color: transparent;
   border: none;
   width: 80px;
-  height: 120px;
+  height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
