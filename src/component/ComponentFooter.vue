@@ -31,15 +31,13 @@
 <style scoped>
 footer{
   background-color: var(--cor-secundaria);
-  width: 100vw;
+
   margin-top: 50px;
   display: grid;
   grid-template-columns: 33% 34% 33%;
   align-items: center;
   justify-content: center;
   padding: 20px 0;
-  position: absolute;
-  bottom: 0;
 }
 button>img{
   max-width: 100%;

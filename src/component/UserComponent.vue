@@ -36,6 +36,10 @@
   article>div>section{
     align-items: center;
     display: flex;
+    width: 380px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   article>span{
     grid-area: b;
@@ -43,6 +47,10 @@
     margin-top: -15px;
     font-size: var(--texto-secundario);
     color: var(--cor-texto-secundaria);
+    width: 380px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   article>a{
     margin-top: auto;

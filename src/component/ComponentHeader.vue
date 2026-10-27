@@ -13,7 +13,6 @@
 <style scoped>
 header{
   background-color: var(--cor-secundaria);
-  width: 100vw;
   height: 140px;
   display: grid;
   grid-template-columns: 70% 30%;

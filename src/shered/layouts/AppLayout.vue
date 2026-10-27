@@ -4,10 +4,15 @@
 </script>
 <template>
 <Header></Header>
+<main>
   <slot></slot>
+</main>
 <Footer></Footer>
 </template>
 
 <style scoped>
+main{
+  min-height: 40vh;
+}
 </style>
 
