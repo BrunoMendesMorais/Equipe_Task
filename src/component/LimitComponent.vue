@@ -29,7 +29,8 @@ article {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 500px;
+  width: 100%;
+  max-width: 600px;
   background-color: var(--cor-primaria);
   padding: 20px;
   border-radius: 8px;

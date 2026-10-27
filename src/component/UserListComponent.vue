@@ -21,7 +21,7 @@ section{
   grid-template-columns: minmax(auto, 500px);
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1500px) {
   section{
     grid-template-columns: repeat(2, minmax(auto, 500px));
   }

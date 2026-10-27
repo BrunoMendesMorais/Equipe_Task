@@ -51,6 +51,10 @@ menu {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 p {
