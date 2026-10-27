@@ -1,12 +1,11 @@
 <script setup lang="ts">
   import AppLayout from "@/shered/layouts/AppLayout.vue";
-  import UserListComponent from "@/component/UserListComponent.vue";
+  import HomeComponent from "@/component/HomeComponent.vue";
 </script>
 
 <template>
   <AppLayout>
-    <UserListComponent></UserListComponent>
+    <HomeComponent/>
     <!-- <RouterView></RouterView> -->
   </AppLayout>
 </template>
- 
