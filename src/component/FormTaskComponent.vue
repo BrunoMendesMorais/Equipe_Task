@@ -15,18 +15,8 @@ const descricao = ref(`Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
     <header>
       <nav>
         <button type="button">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
+          <img src="/icons/user.svg" alt="">
         </button>
-
-        <span>
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="4"></circle>
-            <path d="M20 21a8 8 0 0 0-16 0"></path>
-          </svg>
-        </span>
 
         <strong>{{ autor }}</strong>
       </nav>
@@ -60,13 +50,11 @@ form {
   box-sizing: border-box;
 }
 
-/* --- Cabecalho --- */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  /* Substituído o HEX pela variável de texto secundária para manter consistência */
   border-bottom: 5px solid var(--cor-texto-secundaria);
 }
 
@@ -111,7 +99,6 @@ header aside {
   font-size: var(--texto-secundario);
 }
 
-/* --- Corpo --- */
 main {
   padding: 30px;
   display: flex;
@@ -152,7 +139,6 @@ textarea {
   padding-right: 10px;
 }
 
-/* Scrollbar */
 textarea::-webkit-scrollbar {
   width: 8px;
 }
@@ -164,7 +150,6 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 
-/* --- Botões --- */
 menu {
   display: flex;
   justify-content: flex-end;
@@ -187,7 +172,6 @@ menu button:hover {
   opacity: 0.8;
 }
 
-/* --- Responsividade --- */
 @media (max-width: 500px) {
   main {
     padding: 20px;
