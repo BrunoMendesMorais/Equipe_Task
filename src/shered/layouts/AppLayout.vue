@@ -4,9 +4,7 @@
 </script>
 <template>
 <Header></Header>
-<main>
-  <slot></slot>
-</main>
+<slot></slot>
 <Footer></Footer>
 </template>
 

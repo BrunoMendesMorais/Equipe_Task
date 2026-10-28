@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Recebe os valores do componente pai, com valor padrão 0
+
 defineProps({
   totalUsuarios: {
     type: Number,

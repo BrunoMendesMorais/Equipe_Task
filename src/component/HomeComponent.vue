@@ -6,7 +6,7 @@
 
 </script>
 <template>
-  <section class="home">
+  <main class="home">
     <div>
       <EstatisticaComponent/>
       <UserListComponent/>
@@ -15,7 +15,7 @@
       <FormUserComponent/>
       <LimitListComponent/>
     </div>
-  </section>
+  </main>
 </template>
 
 <style scoped>

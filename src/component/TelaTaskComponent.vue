@@ -4,8 +4,26 @@
  import FiterTaskComponent from "@/component/FilterTaskComponent.vue";
 </script>
 <template>
-  <FiterTaskComponent></FiterTaskComponent>
-  <TaskListComponent></TaskListComponent>
-  <FormTaskComponent></FormTaskComponent>
+  <main>
+    <section>
+      <FiterTaskComponent></FiterTaskComponent>
+      <TaskListComponent></TaskListComponent>
+    </section>
+    <section>
+      <FormTaskComponent></FormTaskComponent>
+    </section>
+  </main>
 </template>
-<style scoped></style>
+<style scoped>
+  section{
+    display: flex;
+    flex-direction: column;
+  }
+  main{
+    max-width: 1500px;
+    display: flex;
+    margin: auto;
+    justify-content: space-around;
+    margin-top: 40px;
+  }
+</style>
