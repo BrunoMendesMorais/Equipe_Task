@@ -26,4 +26,11 @@
     justify-content: space-around;
     margin-top: 40px;
   }
+  @media (max-width: 1500px){
+    main{
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 40px;
+    }
+  }
 </style>

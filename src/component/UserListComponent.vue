@@ -16,14 +16,15 @@
 
 section{
   display: grid;
-  gap: 10px;
   justify-content: center;
-  grid-template-columns: minmax(auto, 500px);
+  grid-template-columns: minmax(auto, 450px);
 }
 
 @media (min-width: 1500px) {
   section{
+    margin: auto;
     grid-template-columns: repeat(2, minmax(auto, 500px));
+    justify-content: center;
   }
 }
 /* @media (min-width: 1580px) {

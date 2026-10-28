@@ -1,4 +1,3 @@
-Snippet de código
 <script setup lang="ts">
 const props = defineProps({
   cor: {

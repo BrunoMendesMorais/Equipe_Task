@@ -44,8 +44,9 @@ p {
   white-space: nowrap;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1500px) {
   header {
+    max-width: 455px;
     flex-direction: column;
     align-items: center;
     padding: 20px;

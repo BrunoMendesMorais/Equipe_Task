@@ -13,7 +13,9 @@
 
 <style scoped>
   article{
-    width: 500px;
+    margin: auto;
+    margin-top: 10px;
+    width: 455px;
     background-color: var(--cor-primaria);
     padding: 20px;
     display: grid;
@@ -36,7 +38,7 @@
   article>div>section{
     align-items: center;
     display: flex;
-    width: 380px;
+    width: 320px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -47,7 +49,7 @@
     margin-top: -15px;
     font-size: var(--texto-secundario);
     color: var(--cor-texto-secundaria);
-    width: 380px;
+    width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

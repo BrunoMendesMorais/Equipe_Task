@@ -22,14 +22,25 @@
 .home>div{
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 40px;
+  align-items: center;
+  width: 95%;
 }
 .home{
   display: grid;
   grid-template-columns: 65% 35%;
   max-width: 1600px;
   margin: auto;
+}
+  @media (max-width: 1500px){
+  .home{
+    grid-template-columns: 500px 1fr;
+  }
+ @media (max-width: 950px){
+  .home{
+    grid-template-columns: 1fr;
+  }
+ }
 }
 </style>
 
