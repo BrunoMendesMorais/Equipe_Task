@@ -6,19 +6,17 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['aumentar', 'reduzir'])
 </script>
 
 <template>
   <article>
     <div>
       <span :style="{ backgroundColor: props.cor }"></span>
-      <slot></slot>
+      <slot name="mensage"></slot>
     </div>
 
     <menu>
-      <button @click="emit('aumentar')">+</button>
-      <button @click="emit('reduzir')">-</button>
+      <slot name="button"></slot>
     </menu>
   </article>
 </template>
@@ -52,21 +50,6 @@ span {
 menu {
   display: flex;
   gap: 10px;
-}
-
-button {
-  background-color: var(--cor-secundaria);
-  color: var(--cor-texto-principal);
-  border: none;
-  border-radius: 6px;
-  width: 45px;
-  height: 45px;
-  font-size: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
 }
 
 button:hover {

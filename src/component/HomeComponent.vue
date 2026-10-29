@@ -24,7 +24,6 @@
   flex-direction: column;
   margin-top: 40px;
   align-items: center;
-  width: 95%;
 }
 .home{
   display: grid;
