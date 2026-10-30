@@ -2,6 +2,16 @@
 import { inject, ref } from 'vue';
 import type {Ref} from 'vue';
 
+interface Usuario {
+  nome: string
+  email: string
+  tarefas: number
+}
+
+const props = defineProps<{
+  usuario: Usuario
+}>()
+
   const taks = 5
   const superior = inject<Ref<number>>('superior',ref(0))
   const inferior = inject<Ref<number>>('inferior',ref(0))
@@ -10,14 +20,14 @@ import type {Ref} from 'vue';
 <template>
   <article>
     <div>
-      <section><img src="/icons/user.svg" alt="">Bruno Mendes de Morais</section>
+      <section><img src="/icons/user.svg" alt="">{{usuario.nome}}</section>
       <a href=""><img src="/icons/pencil-simple.svg" alt=""></a>
     </div>
-    <span>mendesdemoraisbruno@gmail.com</span>
+    <span>{{usuario.email}}</span>
     <a href="">Ver Tarefa</a>
-    <section v-if="taks > superior" style="color: #F74B54">Tasks:{{ taks }}</section>
-    <section v-else-if="taks <= superior && taks > inferior" style="color: #FCE83A">Tasks:{{ taks }}</section>
-    <section v-else="">Tasks:{{ taks }}</section>
+    <section v-if="usuario.tarefas > superior" style="color: #F74B54">Tasks:{{usuario.tarefas}}</section>
+    <section v-else-if="usuario.tarefas <= superior && usuario.tarefas > inferior" style="color: #FCE83A">Tasks:{{usuario.tarefas}}</section>
+    <section v-else="">Tasks:{{usuario.tarefas}}</section>
   </article>
 </template>
 
