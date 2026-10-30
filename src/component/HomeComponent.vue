@@ -1,10 +1,17 @@
 <script setup lang="ts">
+  import { ref, provide } from 'vue'
   import UserListComponent from "@/component/UserListComponent.vue";
   import FormUserComponent from "@/component/FormUserComponent.vue";
   import LimitListComponent from "@/component/LimitListComponent.vue";
   import EstatisticaComponent from "@/component/EstatisticaComponent.vue";
 
+  const limiteInferior = ref(5)
+  const limiteSuperior = ref(10)
+
+  provide("inferior", limiteInferior);
+  provide("superior", limiteSuperior);
 </script>
+
 <template>
   <main class="home">
     <div>
