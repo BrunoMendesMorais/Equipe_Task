@@ -15,7 +15,7 @@ const reduzirInferior = () => {
 
 const aumentarSuperior = () => limiteSuperior.value++
 const reduzirSuperior = () => {
-  if (limiteSuperior > limiteInferior) limiteSuperior.value--
+  if (limiteSuperior.value > limiteInferior.value) limiteSuperior.value--
 }
 </script>
 

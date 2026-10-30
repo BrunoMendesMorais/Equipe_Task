@@ -1,4 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { inject, ref } from 'vue';
+import type {Ref} from 'vue';
+
+  const taks = 5
+  const superior = inject<Ref<number>>('superior',ref(0))
+  const inferior = inject<Ref<number>>('inferior',ref(0))
+
+</script>
 <template>
   <article>
     <div>
@@ -7,7 +15,9 @@
     </div>
     <span>mendesdemoraisbruno@gmail.com</span>
     <a href="">Ver Tarefa</a>
-    <section>Tasks: 5</section>
+    <section v-if="taks > superior" style="color: #F74B54">Tasks:{{ taks }}</section>
+    <section v-else-if="taks <= superior && taks > inferior" style="color: #FCE83A">Tasks:{{ taks }}</section>
+    <section v-else="">Tasks:{{ taks }}</section>
   </article>
 </template>
 
