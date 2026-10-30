@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
+import type { Ref } from 'vue'
 import LimitComponent from "@/component/LimitComponent.vue";
 
-let limiteInferior:number = inject('inferior',0)
-let limiteSuperior:number = inject('superior',0)
+var limiteInferior = inject<Ref<number>>('inferior', ref(0))
+var limiteSuperior = inject<Ref<number>>('superior', ref(0))
 
 const aumentarInferior = () => {
-  if(limiteInferior < limiteSuperior) limiteInferior++
+  if(limiteInferior.value < limiteSuperior.value) limiteInferior.value++
 }
 const reduzirInferior = () => {
-  if (limiteInferior > 0) limiteInferior--
+  if (limiteInferior.value > 0) limiteInferior.value--
 }
 
-const aumentarSuperior = () => limiteSuperior++
+const aumentarSuperior = () => limiteSuperior.value++
 const reduzirSuperior = () => {
-  if (limiteSuperior > limiteInferior) limiteSuperior--
+  if (limiteSuperior > limiteInferior) limiteSuperior.value--
 }
 </script>
 
