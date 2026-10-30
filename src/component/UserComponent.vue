@@ -12,7 +12,6 @@ const props = defineProps<{
   usuario: Usuario
 }>()
 
-  const taks = 5
   const superior = inject<Ref<number>>('superior',ref(0))
   const inferior = inject<Ref<number>>('inferior',ref(0))
 
