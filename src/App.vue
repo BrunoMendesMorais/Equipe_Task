@@ -1,8 +1,6 @@
 <script setup lang="ts">
   import { reactive, provide } from "vue";
   import AppLayout from "@/shered/layouts/AppLayout.vue";
-  import HomeComponent from "@/component/HomeComponent.vue";
-  // import TelaTaskComponent from "@/component/TelaTaskComponent.vue";
   interface Usuario {
   nome: string
   email: string
@@ -68,7 +66,6 @@
 
 <template>
   <AppLayout>
-    <HomeComponent></HomeComponent>
     <RouterView></RouterView>
   </AppLayout>
 </template>

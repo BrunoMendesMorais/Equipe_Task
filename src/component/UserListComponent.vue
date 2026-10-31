@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, reactive } from 'vue'
+import { inject } from 'vue'
 import UserComponent from "@/component/UserComponent.vue";
 import type { Reactive } from 'vue'
 import type { Usuario } from '@/shered/modelUser';
