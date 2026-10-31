@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue';
 import type {Ref} from 'vue';
-
-interface Usuario {
-  nome: string
-  email: string
-  tarefas: number
-}
+import type { Usuario } from '@/shered/modelUser';
 
 const props = defineProps<{
   usuario: Usuario

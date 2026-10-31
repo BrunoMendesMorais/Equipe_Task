@@ -1,26 +1,25 @@
 <script setup lang="ts">
+import type { Usuario } from '@/shered/modelUser';
+import { computed, inject } from 'vue';
+import type { Reactive } from 'vue';
 
-defineProps({
-  totalUsuarios: {
-    type: Number,
-    default: 0
-  },
-  totalTickets: {
-    type: Number,
-    default: 0
-  },
-  mediaTickets: {
-    type: Number,
-    default: 0
-  }
-})
+const listaUsusario:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[])
+
+const totalUsuarios = computed(() => listaUsusario.length);
+const totalTarefas = computed(() => {
+    return listaUsusario.reduce((total, usuario) => {
+        return total + usuario.tarefas;
+    }, 0);
+});
+const mediaTarefas = computed(() => totalTarefas.value / totalUsuarios.value)
+
 </script>
 
 <template>
   <header>
     <p>Total de usuario: {{ totalUsuarios }}</p>
-    <p>Total de tickts: {{ totalTickets }}</p>
-    <p>Media de tickts: {{ mediaTickets }}</p>
+    <p>Total de tickts: {{ totalTarefas }}</p>
+    <p>Media de tickts: {{ mediaTarefas }}</p>
   </header>
 </template>
 
