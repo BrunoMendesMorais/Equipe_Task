@@ -3,13 +3,18 @@ import { inject } from 'vue'
 import UserComponent from "@/component/UserComponent.vue";
 import type { Reactive } from 'vue'
 import type { Usuario } from '@/shered/modelUser';
+const emit = defineEmits(['editarUsuario'])
 
 const usuarios:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[]);
+
+function editarUsuario(usuario: Usuario){
+   emit('editarUsuario', usuario)
+}
 
 </script>
 <template>
   <section>
-      <UserComponent v-for="usuario in usuarios" :key="usuario.email" :usuario="usuario"></UserComponent>
+      <UserComponent v-for="usuario in usuarios" :key="usuario.email" :usuario="usuario" @editarUsuario="editarUsuario"></UserComponent>
   </section>
 </template>
 <style scoped>

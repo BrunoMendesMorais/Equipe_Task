@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { inject, ref } from 'vue';
+import { inject, ref, defineEmits } from 'vue';
 import type {Ref} from 'vue';
 import type { Usuario } from '@/shered/modelUser';
+const emit = defineEmits(['editarUsuario'])
 
 const props = defineProps<{
   usuario: Usuario
 }>()
 
+const editarUsuario = (): void =>{
+  emit('editarUsuario', props.usuario)
+}
   const superior = inject<Ref<number>>('superior',ref(0))
   const inferior = inject<Ref<number>>('inferior',ref(0))
 
@@ -15,7 +19,7 @@ const props = defineProps<{
   <article>
     <div>
       <section><img src="/icons/user.svg" alt="">{{usuario.nome}}</section>
-      <a href=""><img src="/icons/pencil-simple.svg" alt=""></a>
+      <a @click="editarUsuario"><img src="/icons/pencil-simple.svg" alt=""></a>
     </div>
     <span>{{usuario.email}}</span>
    <router-link :to="`/tarefas/${usuario.id}`">
@@ -58,6 +62,10 @@ const props = defineProps<{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  a{
+        cursor: pointer;
   }
   article>span{
     grid-area: b;

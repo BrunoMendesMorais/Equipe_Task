@@ -4,6 +4,13 @@
   import FormUserComponent from "@/component/FormUserComponent.vue";
   import LimitListComponent from "@/component/LimitListComponent.vue";
   import EstatisticaComponent from "@/component/EstatisticaComponent.vue";
+  import type { Usuario } from '@/shered/modelUser';
+  
+  const usuarioSelecionado = ref<Usuario | null>(null);
+    
+  const editarUsuario = (usuario: Usuario) => {
+    usuarioSelecionado.value = usuario;
+  };
 
   const limiteInferior = ref(5)
   const limiteSuperior = ref(10)
@@ -16,10 +23,13 @@
   <main class="home">
     <div>
       <EstatisticaComponent/>
-      <UserListComponent/>
+      <UserListComponent @editarUsuario="editarUsuario"/>
     </div>
     <div>
-      <FormUserComponent/>
+      <FormUserComponent 
+  :userToEdit="usuarioSelecionado" 
+    @limparSelecao="usuarioSelecionado = null" 
+/>
       <LimitListComponent/>
     </div>
   </main>

@@ -1,44 +1,92 @@
 <script setup lang="ts">
-import { ref, inject } from 'vue'
-import type { Reactive } from 'vue'
+import { ref, inject, watch, computed } from 'vue'
+import type { Reactive, PropType } from 'vue'
 import type { Usuario } from '@/shered/modelUser'
+
+const props = defineProps({
+  editar: {
+    type: Object as PropType<Usuario | null>,
+    default: null
+  }
+})
+
+const emit = defineEmits(['limparSelecao'])
 
 const nome = ref<string>('')
 const email = ref<string>('')
+const editandoId = ref<number | null>(null)
 
 const usuarios:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[]);
 
-const limparFormulario = (): void => {
+const sendoEditado = computed(() => props.editar)
+
+const resetarCamposLocais = () => {
   nome.value = ''
   email.value = ''
+  editandoId.value = null
 }
 
-const cadastrarUsuario = (): void => {
+watch(
+  () => props.editar,
+  (newUser) => {
+    if (newUser) {
+      nome.value = newUser.nome
+      email.value = newUser.email
+      editandoId.value = newUser.id
+    } else {
+      resetarCamposLocais()
+    }
+  },
+  { immediate: true }
+)
+
+
+const limparFormulario = (): void => {
+  resetarCamposLocais()
+  emit('limparSelecao') 
+}
+
+const salvarUsuario = (): void => {
   if (!nome.value || !email.value) {
     alert('Por favor, preencha nome e e-mail!')
     return
   }
 
-  const novoUsuario: Usuario = {
-    id: usuarios.length + 1,
-    nome: nome.value,
-    email: email.value,
-    tarefas: 0
-  }
+  if (sendoEditado.value && editandoId.value !== null) {
 
-  if (usuarios) {
-    usuarios.push(novoUsuario)
-    alert('Usuário cadastrado com sucesso!')
-    limparFormulario()
+    const index = usuarios.findIndex(u => u.id === editandoId.value)
+    
+    if (index !== -1) {
+      const usuarioSendoEditado = usuarios[index]
+      
+      if (usuarioSendoEditado) {
+        usuarioSendoEditado.nome = nome.value
+        usuarioSendoEditado.email = email.value
+        alert('Usuário atualizado com sucesso!')
+      }
+    }
   } else {
-    alert('não deu')
+    const novoUsuario: Usuario = {
+      id: usuarios.length + 1,
+      nome: nome.value,
+      email: email.value,
+      tarefas: 0
+    }
+    
+    if (usuarios) {
+      usuarios.push(novoUsuario)
+      alert('Usuário cadastrado com sucesso!')
+    }
   }
+  
+  limparFormulario()
 }
 </script>
 
 <template>
-  <form @submit.prevent="cadastrarUsuario">
-    <h2>Cadastro de usuario</h2>
+<form @submit.prevent="salvarUsuario">
+
+    <h2>{{ sendoEditado ? 'Editar usuário' : 'Cadastro de usuario' }}</h2>
 
     <div>
       <label>Nome:</label>
@@ -52,9 +100,10 @@ const cadastrarUsuario = (): void => {
 
     <menu>
       <button type="button" @click="limparFormulario">Cancelar</button>
-      <button type="submit">Cadastrar</button>
+   
+      <button type="submit">{{ sendoEditado ? 'Salvar' : 'Cadastrar' }}</button>
     </menu>
-  </form>
+</form>
 </template>
 
 <style scoped>
