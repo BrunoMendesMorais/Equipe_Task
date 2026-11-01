@@ -1,27 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
+import type { Reactive } from 'vue'
+import type { Usuario } from '@/shered/modelUser'
 
-const nome = ref('')
-const email = ref('')
+const nome = ref<string>('')
+const email = ref<string>('')
 
-const limparFormulario = () => {
+const usuarios:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[]);
+
+const limparFormulario = (): void => {
   nome.value = ''
   email.value = ''
+}
+
+const cadastrarUsuario = (): void => {
+  if (!nome.value || !email.value) {
+    alert('Por favor, preencha nome e e-mail!')
+    return
+  }
+
+  const novoUsuario: Usuario = {
+    id: usuarios.length + 1,
+    nome: nome.value,
+    email: email.value,
+    tarefas: 0
+  }
+
+  if (usuarios) {
+    usuarios.push(novoUsuario)
+    alert('Usuário cadastrado com sucesso!')
+    limparFormulario()
+  } else {
+    alert('não deu')
+  }
 }
 </script>
 
 <template>
-  <form action="" method="post">
+  <form @submit.prevent="cadastrarUsuario">
     <h2>Cadastro de usuario</h2>
 
     <div>
       <label>Nome:</label>
-      <input type="text" v-model="nome" placeholder="Bruno Mendes" />
+      <input type="text" v-model="nome" placeholder="Digite o nome" />
     </div>
 
     <div>
       <label>E-mail</label>
-      <input type="email" v-model="email" placeholder="bruno.morais@aluno.ifsp.edu.br" />
+      <input type="email" v-model="email" placeholder="Digite o Email" />
     </div>
 
     <menu>
@@ -86,7 +112,6 @@ button {
   cursor: pointer;
 }
 
-/* Responsividade para telas menores que 500px */
 @media (max-width: 500px) {
   form {
     padding: 20px;
@@ -111,7 +136,7 @@ button {
   }
 
   button {
-    width: 48%; /* Os botões dividem o espaço disponível */
+    width: 48%; 
     padding: 10px 0;
   }
 }
