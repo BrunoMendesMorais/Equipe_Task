@@ -52,7 +52,6 @@ const salvarUsuario = (): void => {
   }
 
   if (editando.value && editandoId.value !== null) {
-    // === LÓGICA DE EDIÇÃO ===
     const index = usuarios.findIndex((u) => u.id === editandoId.value)
 
     if (index !== -1) {
@@ -66,7 +65,7 @@ const salvarUsuario = (): void => {
     }
   } else {
     const novoUsuario: Usuario = {
-      id: usuarios.length > 0 ? Math.max(...usuarios.map((u) => u.id)) + 1 : 1,
+      id: usuarios.length +1,
       nome: nome.value,
       email: email.value,
       tarefas: 0,
