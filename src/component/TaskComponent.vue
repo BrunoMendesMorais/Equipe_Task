@@ -1,40 +1,22 @@
 <script setup lang="ts">
-defineProps({
-  titulo: {
-    type: String,
-    default: 'Criar telas no figma'
-  },
-  status: {
-    type: String,
-    default: 'Entregue'
-  },
-  descricao: {
-    type: String,
-    default: 'Criar tela para projeto de TP1 no figma contendo, home, produtos historico, ADM , login e carrinho, considerar d .....'
-  },
-  data: {
-    type: String,
-    default: '12/10/2026'
-  },
-  autor: {
-    type: String,
-    default: 'Bruno Mendes'
-  }
-})
+import type { Tarefa } from '@/shered/modelTarefa';
+defineProps<{
+  tarefa: Tarefa
+}>()
 </script>
 
 <template>
   <article>
     <header>
-      <h2>{{ titulo }}</h2>
-      <span>{{ status }}</span>
+      <h2>{{ tarefa.titulo }}</h2>
+      <span>{{ tarefa.status }}</span>
     </header>
 
-    <p>{{ descricao }}</p>
+    <p>{{ tarefa.descricao }}</p>
 
     <footer>
-      <time>{{ data }}</time>
-      <span>{{ autor }}</span>
+      <time>{{ tarefa.dataAbertura }}</time>
+      <span>{{ tarefa.responsavel }}</span>
     </footer>
   </article>
 </template>
