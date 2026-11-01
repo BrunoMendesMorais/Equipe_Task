@@ -9,10 +9,12 @@
   const route = useRoute();
   const id = Number(route.params.id);
   
-  const tarefasUsuario = computed(() =>
-    tarefas.filter(tarefa => tarefa.responsavelId === id)
-  );
-
+const tarefasUsuario = computed(() => {
+  if (id) {
+    return tarefas.filter(tarefa => tarefa.responsavelId == id)
+  }
+  return tarefas
+});
 </script>
 <template>
   <section>

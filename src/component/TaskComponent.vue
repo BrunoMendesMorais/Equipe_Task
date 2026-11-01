@@ -9,7 +9,9 @@ defineProps<{
   <article>
     <header>
       <h2>{{ tarefa.titulo }}</h2>
-      <span>{{ tarefa.status }}</span>
+      <span v-if="tarefa.status === 'Aberto'" style="background-color: #013782;">{{ tarefa.status }}</span>
+      <span v-if="tarefa.status === 'Em atraso'" style="background-color: #BF000A;">{{ tarefa.status }}</span>
+      <span v-if="tarefa.status === 'Fechado'" >{{ tarefa.status }}</span>
     </header>
 
     <p>{{ tarefa.descricao }}</p>
@@ -51,6 +53,8 @@ h2 {
 header span {
   background-color: var(--cor-positivo);
   color: var(--cor-texto-principal);
+  width: 150px;
+  text-align: center;
   padding: 6px 16px;
   border-radius: 6px;
   flex-shrink: 0;

@@ -11,5 +11,9 @@ export const routers: RouteRecordRaw[] = [
     {
         path: "/tarefas/:id",
         component: TelaTaskComponent
+    },
+    {
+        path: "/tarefas/",
+        component: TelaTaskComponent
     }
 ];
