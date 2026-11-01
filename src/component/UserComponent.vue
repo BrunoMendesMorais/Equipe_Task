@@ -18,14 +18,16 @@ const props = defineProps<{
       <a href=""><img src="/icons/pencil-simple.svg" alt=""></a>
     </div>
     <span>{{usuario.email}}</span>
-    <a href="">Ver Tarefa</a>
+   <router-link :to="`/tarefas/${usuario.id}`">
+      Ver Tarefa
+    </router-link>
     <section v-if="usuario.tarefas > superior" style="color: #F74B54">Tasks:{{usuario.tarefas}}</section>
     <section v-else-if="usuario.tarefas <= superior && usuario.tarefas > inferior" style="color: #FCE83A">Tasks:{{usuario.tarefas}}</section>
     <section v-else="">Tasks:{{usuario.tarefas}}</section>
   </article>
 </template>
 
-<style scoped>
+<style scoped>  
   article{
     margin: auto;
     margin-top: 10px;
