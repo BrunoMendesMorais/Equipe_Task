@@ -1,23 +1,80 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, inject, computed } from 'vue'
+import type { Reactive } from 'vue'
+import type { Tarefa } from '@/shered/modelTarefa'
+import type { Usuario } from '@/shered/modelUser'
+import { useRoute } from 'vue-router'
 
-const autor = ref('Bruno Mendes')
-const status = ref('Entregue')
-const dataInicio = ref('11/10/2026')
-const dataFim = ref('11/10/2026')
-const titulo = ref('Criar telas no figma')
+const id = useRoute().params.id
 
-const descricao = ref(`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`)
+const tarefas = inject<Reactive<Tarefa[]>>('tarefas',[])
+const usuarios = inject<Reactive<Usuario[]>>('usuarios',[])
+
+const autorId: number = parseInt(<string>id)
+
+const autor = computed(() => {
+  const usuarioEncontrado = usuarios.find((u) => u.id === autorId)
+  return usuarioEncontrado ? usuarioEncontrado.nome : 'Usuário não encontrado'
+})
+
+const status = ref<'Aberto' | 'Em atraso' | 'Fechado'>('Aberto')
+
+const dataAtual = new Date().toISOString().split('T')[0]
+const dataAbertura = ref(dataAtual)
+const dataFechamentoForm = ref(dataAtual)
+
+const titulo = ref('')
+const descricao = ref('')
+
+const formatarData = (data: string): string => {
+  if (!data) return ''
+  return data.split('-').reverse().join('/')
+}
+
+const limparFormulario = (): void => {
+  titulo.value = ''
+  descricao.value = ''
+  dataFechamentoForm.value = dataAtual
+}
+
+const cadastrarTarefa = (): void => {
+  if (!titulo.value || !descricao.value) {
+    alert('Por favor, preencha o título e a descrição!')
+    return
+  }
+
+  const totalTarefas = tarefas ? tarefas.length : 0
+
+  const novaTarefa: Tarefa = {
+    id: totalTarefas + 1,
+    titulo: titulo.value,
+    status: status.value,
+    descricao: descricao.value,
+    dataAbertura: dataAbertura.value ?? '',
+    dataFechamento: dataFechamentoForm.value ? dataFechamentoForm.value : null,
+    responsavelId: autorId,
+    responsavel: autor.value
+  }
+
+  if (tarefas) {
+    tarefas.push(novaTarefa)
+    console.log('Nova lista de tarefas:', tarefas)
+    alert('Tarefa cadastrada com sucesso!')
+    limparFormulario()
+  } else {
+    console.error('Lista de tarefas não encontrada no provide.')
+    alert('Erro ao cadastrar a tarefa.')
+  }
+}
 </script>
 
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent="cadastrarTarefa">
     <header>
       <nav>
         <button type="button">
           <img src="/icons/user.svg" alt="">
         </button>
-
         <strong>{{ autor }}</strong>
       </nav>
 
@@ -25,17 +82,24 @@ const descricao = ref(`Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
     </header>
 
     <main>
-      <section>
-        <time>{{ dataInicio }}</time> a <time>{{ dataFim }}</time>
+      <!-- Seção formatada inline como: 11/10/2026 a 11/10/2026 -->
+      <section class="datas-container">
+        <time>{{ formatarData(dataAbertura || '' )}}</time>
+        <span>a</span>
+        <input 
+          type="date" 
+          v-model="dataFechamentoForm" 
+          class="input-data"
+        />
       </section>
 
-      <input type="text" v-model="titulo" placeholder="Título da tarefa" />
+      <input class="titulo-input" type="text" v-model="titulo" placeholder="Título da tarefa" />
 
       <textarea v-model="descricao" placeholder="Descreva a tarefa aqui..."></textarea>
 
       <menu>
-        <button type="button">Alterar</button>
-        <button type="button">Reabrir</button>
+        <button type="button" @click="limparFormulario">Cancelar</button>
+        <button type="submit">Cadastrar</button>
       </menu>
     </main>
   </form>
@@ -74,17 +138,6 @@ nav button {
   padding: 0;
 }
 
-nav span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background-color: var(--cor-texto-secundaria);
-  border-radius: 50%;
-  color: var(--cor-primaria);
-}
-
 nav strong {
   font-size: var(--texto-normal);
   color: var(--cor-texto-principal);
@@ -106,17 +159,32 @@ main {
   gap: 20px;
 }
 
-section {
-  text-align: right;
-  color: var(--cor-texto-secundaria);
-}
-
-section time {
+/* Formatação alinhada à direita e inline */
+.datas-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
   color: var(--cor-texto-secundaria);
   font-size: var(--texto-secundario);
 }
 
-input {
+.input-data {
+  background: transparent;
+  border: none;
+  color: var(--cor-texto-secundaria);
+  font-size: var(--texto-secundario);
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.input-data::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
+.titulo-input {
   background: transparent;
   border: none;
   font-size: var(--texto-titulo);

@@ -75,7 +75,7 @@ interface Usuario {
   ]
 )
 
-const tarefas: Tarefa[] = [
+const tarefas = reactive<Tarefa[]>([
   // João Silva - 5 tarefas
   { id: 1, titulo: 'Configurar ambiente de desenvolvimento', status: 'Fechado', descricao: 'Preparar o ambiente e instalar as dependências do projeto.', dataAbertura: '2026-10-01', dataFechamento: '2026-10-03', responsavelId: 1, responsavel: 'João Silva' },
   { id: 2, titulo: 'Corrigir erro de autenticação', status: 'Aberto', descricao: 'Investigar falhas no processo de login dos usuários.', dataAbertura: '2026-10-05', dataFechamento: null, responsavelId: 1, responsavel: 'João Silva' },
@@ -161,7 +161,7 @@ const tarefas: Tarefa[] = [
   { id: 64, titulo: 'Atualizar README', status: 'Fechado', descricao: 'Atualizar informações gerais e instruções do repositório.', dataAbertura: '2026-10-03', dataFechamento: '2026-10-08', responsavelId: 10, responsavel: 'Beatriz Martins' },
   { id: 65, titulo: 'Revisar histórico de alterações', status: 'Em atraso', descricao: 'Organizar e documentar as principais alterações.', dataAbertura: '2026-10-15', dataFechamento: null, responsavelId: 10, responsavel: 'Beatriz Martins' },
   { id: 66, titulo: 'Preparar entrega do projeto', status: 'Aberto', descricao: 'Conferir arquivos e preparar a versão final.', dataAbertura: '2026-10-18', dataFechamento: null, responsavelId: 10, responsavel: 'Beatriz Martins' }
-];
+]);
 
 
 provide('usuarios',usuarios)
