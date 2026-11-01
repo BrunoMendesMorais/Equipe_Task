@@ -6,8 +6,8 @@ import type { Usuario } from '@/shered/modelUser'
 const props = defineProps({
   editar: {
     type: Object as PropType<Usuario | null>,
-    default: null
-  }
+    default: null,
+  },
 })
 
 const emit = defineEmits(['limparSelecao'])
@@ -16,9 +16,9 @@ const nome = ref<string>('')
 const email = ref<string>('')
 const editandoId = ref<number | null>(null)
 
-const usuarios:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[]);
+const usuarios: Usuario[] = inject<Reactive<Usuario[]>>('usuarios', [])
 
-const sendoEditado = computed(() => props.editar)
+const editando = computed(() => props.editar)
 
 const resetarCamposLocais = () => {
   nome.value = ''
@@ -37,13 +37,12 @@ watch(
       resetarCamposLocais()
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
-
 
 const limparFormulario = (): void => {
   resetarCamposLocais()
-  emit('limparSelecao') 
+  emit('limparSelecao')
 }
 
 const salvarUsuario = (): void => {
@@ -52,13 +51,13 @@ const salvarUsuario = (): void => {
     return
   }
 
-  if (sendoEditado.value && editandoId.value !== null) {
+  if (editando.value && editandoId.value !== null) {
+    // === LÓGICA DE EDIÇÃO ===
+    const index = usuarios.findIndex((u) => u.id === editandoId.value)
 
-    const index = usuarios.findIndex(u => u.id === editandoId.value)
-    
     if (index !== -1) {
       const usuarioSendoEditado = usuarios[index]
-      
+
       if (usuarioSendoEditado) {
         usuarioSendoEditado.nome = nome.value
         usuarioSendoEditado.email = email.value
@@ -67,26 +66,25 @@ const salvarUsuario = (): void => {
     }
   } else {
     const novoUsuario: Usuario = {
-      id: usuarios.length + 1,
+      id: usuarios.length > 0 ? Math.max(...usuarios.map((u) => u.id)) + 1 : 1,
       nome: nome.value,
       email: email.value,
-      tarefas: 0
+      tarefas: 0,
     }
-    
+
     if (usuarios) {
       usuarios.push(novoUsuario)
       alert('Usuário cadastrado com sucesso!')
     }
   }
-  
+
   limparFormulario()
 }
 </script>
 
 <template>
-<form @submit.prevent="salvarUsuario">
-
-    <h2>{{ sendoEditado ? 'Editar usuário' : 'Cadastro de usuario' }}</h2>
+  <form @submit.prevent="salvarUsuario">
+    <h2>{{ editando ? 'Editar usuário' : 'Cadastro de usuario' }}</h2>
 
     <div>
       <label>Nome:</label>
@@ -100,10 +98,10 @@ const salvarUsuario = (): void => {
 
     <menu>
       <button type="button" @click="limparFormulario">Cancelar</button>
-   
-      <button type="submit">{{ sendoEditado ? 'Salvar' : 'Cadastrar' }}</button>
+
+      <button type="submit">{{ editando ? 'Salvar' : 'Cadastrar' }}</button>
     </menu>
-</form>
+  </form>
 </template>
 
 <style scoped>
@@ -185,7 +183,7 @@ button {
   }
 
   button {
-    width: 48%; 
+    width: 48%;
     padding: 10px 0;
   }
 }
