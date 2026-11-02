@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import type { Tarefa } from '@/shered/modelTarefa';
-defineProps<{
+import { defineEmits } from "vue";
+const emit = defineEmits(['editTarefa'])  
+
+const props = defineProps<{
   tarefa: Tarefa
 }>()
+
+const editTarefa = ():void => {
+  emit('editTarefa',props.tarefa)
+}
 </script>
 
 <template>
-  <article>
+  <article @click="editTarefa">
     <header>
       <h2>{{ tarefa.titulo }}</h2>
       <span v-if="tarefa.status === 'Aberto'" style="background-color: #013782;">{{ tarefa.status }}</span>

@@ -3,10 +3,12 @@
 <template>
     <header id="header_pagina">
     <img src="/logo.png" alt="">
-    <button>
+    <router-link to="/">
+      <button>
       <img src="/icons/users-three.svg" alt="">
       equipe
     </button>
+    </router-link>
   </header>
 </template>
 
@@ -33,11 +35,15 @@ button{
   align-items: center;
   justify-content: center;
   margin-left: auto;
+  
 }
 button:hover{
   transform: scale(1.1);
   transition-duration: 100ms;
   cursor: pointer;
+}
+a{
+  text-decoration: none;
 }
 </style>
 

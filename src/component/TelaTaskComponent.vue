@@ -1,16 +1,24 @@
 <script setup lang="ts">
- import FormTaskComponent from "@/component/FormTaskComponent.vue";
- import TaskListComponent from "@/component/TaskListComponent.vue";
- import FiterTaskComponent from "@/component/FilterTaskComponent.vue";
+  import FormTaskComponent from "@/component/FormTaskComponent.vue";
+  import TaskListComponent from "@/component/TaskListComponent.vue";
+  import FiterTaskComponent from "@/component/FilterTaskComponent.vue";
+  import type { Tarefa } from "@/shered/modelTarefa";
+  import { ref } from 'vue'
+
+  const tarefaSelecionada = ref<Tarefa | null>(null)
+
+  const editTarefa = (tarefa: Tarefa) => {
+    tarefaSelecionada.value = tarefa
+  }
 </script>
 <template>
   <main>
     <section>
       <FiterTaskComponent></FiterTaskComponent>
-      <TaskListComponent></TaskListComponent>
+      <TaskListComponent @editTarefa="editTarefa"></TaskListComponent>
     </section>
     <section>
-      <FormTaskComponent></FormTaskComponent>
+     <FormTaskComponent :taskToEdit="tarefaSelecionada" @limparSelecao="tarefaSelecionada = null"></FormTaskComponent>
     </section>
   </main>
 </template>

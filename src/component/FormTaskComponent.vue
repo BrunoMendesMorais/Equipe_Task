@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
-import type { Reactive } from 'vue'
+import { ref, inject, computed, watch } from 'vue'
+import type { Reactive, PropType } from 'vue'
 import type { Tarefa } from '@/shered/modelTarefa'
 import type { Usuario } from '@/shered/modelUser'
 import { useRoute } from 'vue-router'
+
+const props = defineProps({
+  taskToEdit: {
+    type: Object as PropType<Tarefa | null>,
+    default: null
+  }
+})
+
+const emit = defineEmits(['limparSelecao'])
 
 const id = useRoute().params.id
 
@@ -26,50 +35,97 @@ const dataFechamentoForm = ref(dataAtual)
 const titulo = ref('')
 const descricao = ref('')
 
+const editandoId = ref<number | null>(null)
+
+const isEditing = computed(() => props.taskToEdit)
+
 const formatarData = (data: string): string => {
   if (!data) return ''
   return data.split('-').reverse().join('/')
 }
 
-const limparFormulario = (): void => {
+const resetarCamposLocais = (): void => {
   titulo.value = ''
   descricao.value = ''
+  status.value = 'Aberto'
+  dataAbertura.value = dataAtual
   dataFechamentoForm.value = dataAtual
+  editandoId.value = null
 }
 
-const cadastrarTarefa = (): void => {
+watch(
+  () => props.taskToEdit,
+  (newTask) => {
+    console.log(props)
+    if (newTask) {
+      titulo.value = newTask.titulo
+      descricao.value = newTask.descricao
+      status.value = newTask.status
+      dataAbertura.value = newTask.dataAbertura || dataAtual
+      dataFechamentoForm.value = newTask.dataFechamento || dataAtual
+      editandoId.value = newTask.id
+    } else {
+      resetarCamposLocais()
+    }
+  },
+  { immediate: true }
+)
+
+const limparFormulario = (): void => {
+  resetarCamposLocais()
+  emit('limparSelecao')
+}
+
+const salvarTarefa = (): void => {
   if (!titulo.value || !descricao.value) {
     alert('Por favor, preencha o título e a descrição!')
     return
   }
 
-  const totalTarefas = tarefas ? tarefas.length : 0
-
-  const novaTarefa: Tarefa = {
-    id: totalTarefas + 1,
-    titulo: titulo.value,
-    status: status.value,
-    descricao: descricao.value,
-    dataAbertura: dataAbertura.value ?? '',
-    dataFechamento: dataFechamentoForm.value ? dataFechamentoForm.value : null,
-    responsavelId: autorId,
-    responsavel: autor.value
-  }
-
-  if (tarefas) {
-    tarefas.push(novaTarefa)
-    console.log('Nova lista de tarefas:', tarefas)
-    alert('Tarefa cadastrada com sucesso!')
-    limparFormulario()
+  if (isEditing.value && editandoId.value !== null) {
+    const index = tarefas.findIndex(t => t.id === editandoId.value)
+    
+    if (index !== -1) {
+      const tarefaSendoEditada = tarefas[index]
+      
+      if (tarefaSendoEditada) {
+        tarefaSendoEditada.titulo = titulo.value
+        tarefaSendoEditada.descricao = descricao.value
+        tarefaSendoEditada.status = status.value
+        tarefaSendoEditada.dataFechamento = dataFechamentoForm.value || null;
+        alert('Tarefa atualizada com sucesso!')
+      }
+    }
   } else {
-    console.error('Lista de tarefas não encontrada no provide.')
-    alert('Erro ao cadastrar a tarefa.')
+    const totalTarefas = tarefas ? tarefas.length : 0
+
+    const novaTarefa: Tarefa = {
+      id: totalTarefas > 0 ? Math.max(...tarefas.map(t => t.id)) + 1 : 1, 
+      titulo: titulo.value,
+      status: status.value,
+      descricao: descricao.value,
+      dataAbertura: dataAbertura.value ?? '',
+      dataFechamento: dataFechamentoForm.value ? dataFechamentoForm.value : null,
+      responsavelId: autorId,
+      responsavel: autor.value
+    }
+
+    if (tarefas) {
+      tarefas.push(novaTarefa)
+      console.log('Nova lista de tarefas:', tarefas)
+      alert('Tarefa cadastrada com sucesso!')
+    } else {
+      console.error('Lista de tarefas não encontrada no provide.')
+      alert('Erro ao cadastrar a tarefa.')
+    }
   }
+  
+  limparFormulario()
 }
 </script>
 
 <template>
-  <form @submit.prevent="cadastrarTarefa">
+  <form @submit.prevent="salvarTarefa">
     <header>
       <nav>
         <button type="button">
@@ -82,7 +138,6 @@ const cadastrarTarefa = (): void => {
     </header>
 
     <main>
-      <!-- Seção formatada inline como: 11/10/2026 a 11/10/2026 -->
       <section class="datas-container">
         <time>{{ formatarData(dataAbertura || '' )}}</time>
         <span>a</span>
@@ -99,7 +154,7 @@ const cadastrarTarefa = (): void => {
 
       <menu>
         <button type="button" @click="limparFormulario">Cancelar</button>
-        <button type="submit">Cadastrar</button>
+        <button type="submit">{{ isEditing ? 'Salvar' : 'Cadastrar' }}</button>
       </menu>
     </main>
   </form>
@@ -159,7 +214,6 @@ main {
   gap: 20px;
 }
 
-/* Formatação alinhada à direita e inline */
 .datas-container {
   display: flex;
   justify-content: flex-end;

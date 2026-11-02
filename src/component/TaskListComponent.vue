@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import TaskComponent from "@/component/TaskComponent.vue";
-  import { inject, computed } from "vue";
+  import { inject, computed, } from "vue";
   import { useRoute,  } from 'vue-router';
   import type { Tarefa } from '@/shered/modelTarefa.ts'
+
+  const emit = defineEmits(['editTarefa'])  
 
   const tarefas:Tarefa[] = inject<Tarefa[]>('tarefas',[])
   
@@ -15,10 +17,14 @@ const tarefasUsuario = computed(() => {
   }
   return tarefas
 });
+
+const editTarefa = (tarefa:Tarefa):void => {
+  emit('editTarefa',tarefa)
+}
 </script>
 <template>
   <section>
-    <TaskComponent v-for="tarefa in tarefasUsuario" :key="tarefa.id" :tarefa="tarefa"/>
+    <TaskComponent v-for="tarefa in tarefasUsuario" :key="tarefa.id" :tarefa="tarefa" @editTarefa="editTarefa"/>
   </section>
 </template>
 <style scoped>
