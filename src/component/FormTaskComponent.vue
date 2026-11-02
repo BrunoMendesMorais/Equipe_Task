@@ -56,7 +56,6 @@ const resetarCamposLocais = (): void => {
 watch(
   () => props.taskToEdit,
   (newTask) => {
-    console.log(props)
     if (newTask) {
       titulo.value = newTask.titulo
       descricao.value = newTask.descricao
@@ -112,10 +111,8 @@ const salvarTarefa = (): void => {
 
     if (tarefas) {
       tarefas.push(novaTarefa)
-      console.log('Nova lista de tarefas:', tarefas)
       alert('Tarefa cadastrada com sucesso!')
     } else {
-      console.error('Lista de tarefas não encontrada no provide.')
       alert('Erro ao cadastrar a tarefa.')
     }
   }
