@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, inject, computed, watch } from 'vue'
-import type { Reactive, PropType } from 'vue'
+import { ref, computed, watch } from 'vue'
+import type { PropType } from 'vue'
 import type { Tarefa } from '@/shered/modelTarefa'
-import type { Usuario } from '@/shered/modelUser'
 import { useRoute } from 'vue-router'
+// Imports das Stores
+import { useTarefaStore } from '@/store/useTarefaStore'
+import { useUsuarioStore } from '@/store/useUsuarioStore'
 
 const props = defineProps({
   taskToEdit: {
@@ -14,16 +16,15 @@ const props = defineProps({
 
 const emit = defineEmits(['limparSelecao'])
 
-const id = useRoute().params.id
+const route = useRoute()
+const autorId: number = parseInt(route.params.id as string)
 
-const tarefas = inject<Reactive<Tarefa[]>>('tarefas',[])
-const usuarios = inject<Reactive<Usuario[]>>('usuarios',[])
-
-const autorId: number = parseInt(<string>id)
+const tarefaStore = useTarefaStore()
+const usuarioStore = useUsuarioStore()
 
 const autor = computed(() => {
-  const usuarioEncontrado = usuarios.find((u) => u.id === autorId)
-  return usuarioEncontrado ? usuarioEncontrado.nome : 'Usuário não encontrado'
+  
+  return usuarioStore.nomePorid(autorId) || 'Usuário não encontrado'
 })
 
 const status = ref<'Aberto' | 'Em atraso' | 'Fechado'>('Aberto')
@@ -37,7 +38,7 @@ const descricao = ref('')
 
 const editandoId = ref<number | null>(null)
 
-const isEditing = computed(() => props.taskToEdit)
+const isEditing = computed(() => !!props.taskToEdit)
 
 const formatarData = (data: string): string => {
   if (!data) return ''
@@ -82,39 +83,37 @@ const salvarTarefa = (): void => {
   }
 
   if (isEditing.value && editandoId.value !== null) {
-    const index = tarefas.findIndex(t => t.id === editandoId.value)
-    
-    if (index !== -1) {
-      const tarefaSendoEditada = tarefas[index]
-      
-      if (tarefaSendoEditada) {
-        tarefaSendoEditada.titulo = titulo.value
-        tarefaSendoEditada.descricao = descricao.value
-        tarefaSendoEditada.status = status.value
-        tarefaSendoEditada.dataFechamento = dataFechamentoForm.value || null;
-        alert('Tarefa atualizada com sucesso!')
-      }
+    try {
+      tarefaStore.atualizarTarefa(editandoId.value, {
+        id: editandoId.value,
+        titulo: titulo.value,
+        status: status.value,
+        descricao: descricao.value,
+        dataAbertura: dataAbertura.value ?? '', 
+        dataFechamento: dataFechamentoForm.value || null,
+        responsavelId: autorId, 
+        responsavel: autor.value 
+      })
+      alert('Tarefa atualizada com sucesso!')
+    } catch (erro) {
+      alert('Erro ao atualizar a tarefa.')
     }
   } else {
-    const totalTarefas = tarefas ? tarefas.length : 0
+    const totalTarefas = tarefaStore.tarefas.length
 
     const novaTarefa: Tarefa = {
-      id: totalTarefas > 0 ? Math.max(...tarefas.map(t => t.id)) + 1 : 1, 
+      id: totalTarefas > 0 ? Math.max(...tarefaStore.tarefas.map(t => t.id)) + 1 : 1, 
       titulo: titulo.value,
       status: status.value,
       descricao: descricao.value,
       dataAbertura: dataAbertura.value ?? '',
-      dataFechamento: dataFechamentoForm.value ? dataFechamentoForm.value : null,
+      dataFechamento: dataFechamentoForm.value || null,
       responsavelId: autorId,
-      responsavel: autor.value
+      responsavel: autor.value 
     }
 
-    if (tarefas) {
-      tarefas.push(novaTarefa)
-      alert('Tarefa cadastrada com sucesso!')
-    } else {
-      alert('Erro ao cadastrar a tarefa.')
-    }
+    tarefaStore.adicionarTarefa(novaTarefa)
+    alert('Tarefa cadastrada com sucesso!')
   }
   
   limparFormulario()

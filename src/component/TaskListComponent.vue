@@ -3,10 +3,11 @@
   import { inject, computed, } from "vue";
   import { useRoute,  } from 'vue-router';
   import type { Tarefa } from '@/shered/modelTarefa.ts'
+  import { useTarefaStore } from "@/store/useTarefaStore";
 
   const emit = defineEmits(['editTarefa'])  
 
-  const tarefas:Tarefa[] = inject<Tarefa[]>('tarefas',[])
+  const tarefas:Tarefa[] = useTarefaStore().tarefas;
   
   const route = useRoute();
   const id = Number(route.params.id);

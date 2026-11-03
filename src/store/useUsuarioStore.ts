@@ -85,6 +85,13 @@ export const useUsuarioStore = defineStore('usuario', {
     },
     listarUsuarios(){
       return this.usuarios
+    },
+    nomePorid(id:number){
+      const index = this.usuarios.findIndex(u => u.id === id)
+      if(index != -1){
+        return this.usuarios[index]?.nome
+      }
+      return "Usuário não encontrado"
     }
   }
 })

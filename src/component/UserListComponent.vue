@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import UserComponent from "@/component/UserComponent.vue";
-import type { Reactive } from 'vue'
 import type { Usuario } from '@/shered/modelUser';
 const emit = defineEmits(['editarUsuario'])
 import { useUsuarioStore } from '@/store/useUsuarioStore'
