@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { inject } from 'vue'
 import UserComponent from "@/component/UserComponent.vue";
 import type { Reactive } from 'vue'
 import type { Usuario } from '@/shered/modelUser';
 const emit = defineEmits(['editarUsuario'])
+import { useUsuarioStore } from '@/store/useUsuarioStore'
 
-const usuarios:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[]);
+const usuarioStore = useUsuarioStore()
+const usuarios:Usuario[] = usuarioStore.listarUsuarios()
 
 function editarUsuario(usuario: Usuario){
    emit('editarUsuario', usuario)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, inject, watch, computed } from 'vue'
-import type { Reactive, PropType } from 'vue'
+import { ref, watch, computed } from 'vue'
+import type { PropType } from 'vue'
+import { useUsuarioStore } from '@/store/useUsuarioStore'
 import type { Usuario } from '@/shered/modelUser'
 
 const props = defineProps({
@@ -16,7 +17,7 @@ const nome = ref<string>('')
 const email = ref<string>('')
 const editandoId = ref<number | null>(null)
 
-const usuarios: Usuario[] = inject<Reactive<Usuario[]>>('usuarios', [])
+const usuarioStore = useUsuarioStore()
 
 const editando = computed(() => props.editar)
 
@@ -52,29 +53,17 @@ const salvarUsuario = (): void => {
   }
 
   if (editando.value && editandoId.value !== null) {
-    const index = usuarios.findIndex((u) => u.id === editandoId.value)
-
-    if (index !== -1) {
-      const usuarioSendoEditado = usuarios[index]
-
-      if (usuarioSendoEditado) {
-        usuarioSendoEditado.nome = nome.value
-        usuarioSendoEditado.email = email.value
-        alert('Usuário atualizado com sucesso!')
-      }
-    }
+    usuarioStore.atualizarUsuario(editandoId.value, <Usuario>{ nome: nome.value, email: email.value })
+    alert('Usuário atualizado com sucesso!')
   } else {
     const novoUsuario: Usuario = {
-      id: usuarios.length +1,
+      id: usuarioStore.proxId(),
       nome: nome.value,
       email: email.value,
       tarefas: 0,
     }
-
-    if (usuarios) {
-      usuarios.push(novoUsuario)
-      alert('Usuário cadastrado com sucesso!')
-    }
+    usuarioStore.adicionarUsuario(novoUsuario)
+    alert('Usuário cadastrado com sucesso!')
   }
 
   limparFormulario()
