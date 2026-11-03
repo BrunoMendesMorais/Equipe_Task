@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import TaskComponent from "@/component/TaskComponent.vue";
-  import { inject, computed, } from "vue";
+  import { computed, } from "vue";
   import { useRoute,  } from 'vue-router';
   import type { Tarefa } from '@/shered/modelTarefa.ts'
   import { useTarefaStore } from "@/store/useTarefaStore";

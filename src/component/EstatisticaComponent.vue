@@ -2,8 +2,9 @@
 import type { Usuario } from '@/shered/modelUser';
 import { computed, inject } from 'vue';
 import type { Reactive } from 'vue';
+import { useUsuarioStore } from '@/store/useUsuarioStore';
 
-const listaUsusario:Usuario[] = inject<Reactive<Usuario[]>>('usuarios',[])
+const listaUsusario:Usuario[] = useUsuarioStore().usuarios
 
 const totalUsuarios = computed(() => listaUsusario.length);
 const totalTarefas = computed(() => {

@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 import type { PropType } from 'vue'
 import type { Tarefa } from '@/shered/modelTarefa'
 import { useRoute } from 'vue-router'
-// Imports das Stores
+
 import { useTarefaStore } from '@/store/useTarefaStore'
 import { useUsuarioStore } from '@/store/useUsuarioStore'
 
