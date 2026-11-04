@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import FormTaskComponent from "@/component/FormTaskComponent.vue";
   import TaskListComponent from "@/component/TaskListComponent.vue";
-  import FiterTaskComponent from "@/component/FilterTaskComponent.vue";
   import type { Tarefa } from "@/shered/modelTarefa";
   import { ref } from 'vue'
 
@@ -14,7 +13,6 @@
 <template>
   <main>
     <section>
-      <FiterTaskComponent></FiterTaskComponent>
       <TaskListComponent @editTarefa="editTarefa"></TaskListComponent>
     </section>
     <section>

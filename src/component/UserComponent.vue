@@ -25,13 +25,19 @@ const editarUsuario = (): void =>{
    <router-link :to="`/tarefas/${usuario.id}`">
       Ver Tarefa
     </router-link>
-    <section v-if="usuario.tarefas > superior" style="color: #F74B54">Tasks:{{usuario.tarefas}}</section>
-    <section v-else-if="usuario.tarefas <= superior && usuario.tarefas > inferior" style="color: #FCE83A">Tasks:{{usuario.tarefas}}</section>
+    <section v-if="usuario.tarefas > superior" class="vermelho">Tasks:{{usuario.tarefas}}</section>
+    <section v-else-if="usuario.tarefas <= superior && usuario.tarefas > inferior" class="amarelo">Tasks:{{usuario.tarefas}}</section>
     <section v-else="">Tasks:{{usuario.tarefas}}</section>
   </article>
 </template>
 
 <style scoped>  
+  .vermelho{
+    color: #F74B54;
+  }
+  .amarelo{
+    color: #FCE83A;
+  }
   article{
     margin: auto;
     margin-top: 10px;

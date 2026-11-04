@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Usuario } from '@/shered/modelUser';
-import { computed, inject } from 'vue';
-import type { Reactive } from 'vue';
+import { computed } from 'vue';
 import { useUsuarioStore } from '@/store/useUsuarioStore';
 
 const listaUsusario:Usuario[] = useUsuarioStore().usuarios

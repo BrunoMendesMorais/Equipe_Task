@@ -16,8 +16,8 @@ const editTarefa = ():void => {
   <article @click="editTarefa">
     <header>
       <h2>{{ tarefa.titulo }}</h2>
-      <span v-if="tarefa.status === 'Aberto'" style="background-color: #013782;">{{ tarefa.status }}</span>
-      <span v-if="tarefa.status === 'Em atraso'" style="background-color: #BF000A;">{{ tarefa.status }}</span>
+      <span v-if="tarefa.status === 'Aberto'" class="azul">{{ tarefa.status }}</span>
+      <span v-if="tarefa.status === 'Em atraso'" class="vermelho">{{ tarefa.status }}</span>
       <span v-if="tarefa.status === 'Fechado'" >{{ tarefa.status }}</span>
     </header>
 
@@ -31,6 +31,12 @@ const editTarefa = ():void => {
 </template>
 
 <style scoped>
+.azul{
+  background-color: #013782;
+}
+.vermelho{
+  background-color: #BF000A;
+}
 article {
   background-color: var(--cor-primaria);
   padding: 30px;

@@ -32,10 +32,5 @@ section{
     justify-content: center;
   }
 }
-/* @media (min-width: 1580px) {
-  section{
-    grid-template-columns: repeat(3, minmax(auto, 500px));
-  }
-} */
 </style>
 
